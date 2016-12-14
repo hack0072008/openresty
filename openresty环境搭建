@@ -1,0 +1,53 @@
+openresty环境搭建
+
+一 luajit安装
+   1 安装包下载
+     LuaJIT 官网 http://luajit.org/download.html 
+   2 编译与安装
+     # wget http://luajit.org/download/LuaJIT-2.1.0-beta1.tar.gz
+     # tar -xvf LuaJIT-2.1.0-beta1.tar.gz
+     # cd LuaJIT-2.1.0-beta1
+     # make
+     # make install
+     '''
+     默认安装路径在/usr/local/bin下，需要手工:
+     ln -s /usr/local/bin/luajit-2.1.0-beta1 /usr/local/bin/luajit
+     '''
+   3 验证 LuaJIT 是否安装成功
+     # luajit -v
+       LuaJIT 2.1.0-beta1 -- Copyright (C) 2005-2015 Mike Pall.
+       http://luajit.org/
+     # cat hello.lua
+       print("hello world")
+     # luajit hello.lua
+       hello world
+
+二 openresty centos下的安装
+0 安装包的下载：
+  http://openresty.org/
+1 依赖库的安装：
+  yum install readline-devel pcre-devel openssl-devel perl -y
+2 配置编译
+  ./configure --prefix=/opt/openresty\
+             --with-luajit\
+             --without-http_redis2_module \
+             --with-http_iconv_module
+  '''
+  a 选项 --with-Components 激活组件，--without 则是禁止组件；
+  b --prefix=/opt/openresty 指定安装目录
+  c 可以指定-j4参数，以4核方式
+  d 出现'Type the following commands to build and install:
+    gmake
+    gmake install' 正常输出，具体信息可以看源码包目录下的 build/nginx-VERSION/objs/autoconf.err
+  '''
+3 编译
+  gmake
+4 安装
+  gmake install
+5 配置环境变量
+  打开文件 /etc/profile， 在文件末尾加入export PATH=$PATH:/opt/openresty/nginx/sbin
+  source /etc/profile
+  验证一下：
+  [root@S1PA11 openresty-1.11.2.2]# type nginx
+  nginx is /opt/openresty/nginx/sbin/nginx
+完
