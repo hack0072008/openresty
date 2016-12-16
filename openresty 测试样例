@@ -1,0 +1,7 @@
+
+curl 127.0.0.1:80/hello
+curl 127.0.0.1:80/get_random_string?aaa=bbb
+curl -i --data 'info=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' 127.0.0.1:80/decode_info
+curl -i 127.0.0.1:80/mysql
+
+
