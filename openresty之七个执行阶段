@@ -1,6 +1,4 @@
 
-
-
 七个执行阶段顺序依次为：
 location /mixed {
     body_filter_by_lua 'ngx.log(ngx.ERR,"body_filter_by_lua")';
@@ -11,5 +9,20 @@ location /mixed {
     log_by_lua 'ngx.log(ngx.ERR,"log_by_lua")';
     content_by_lua 'ngx.log(ngx.ERR,"content_by_lua")';
 }
+
+
+
+样例：
+明文协议
+location /mixed {
+    content_by_lua 'path/xxx.lua';    //请求处理
+}
+加密协议
+location /mixed {
+    access_by_lua 'path/aaa .lua';        //请求解密处理
+    content_by_lua 'path/xxx.lua';        //请求处理
+    body_filter_by_lua 'path/bbb.lua';    //应答加密处理
+}
+
 
 完
